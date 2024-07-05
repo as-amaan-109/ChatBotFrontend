@@ -6,7 +6,9 @@ import {
 } from "@heroicons/react/24/outline";
 import "./chatai.css";
 import botimg from "../images/chatai.png";
-import Markdown from "markdown-to-jsx";
+import AiResponse from "./AiResponse";
+
+
 
 const ChatAi = () => {
   const [prompt, setPrompt] = useState("");
@@ -16,6 +18,7 @@ const ChatAi = () => {
   ]);
   const textareaRef = useRef(null);
   const chatContainerRef = useRef(null);
+  
 
   async function generateResponse(text) {
     try {
@@ -66,8 +69,10 @@ const ChatAi = () => {
 
   }, []);
 
+
   useEffect(() => {
     scrollDown();
+      
   }, [chat]);
 
   const scrollDown = () => {
@@ -103,7 +108,7 @@ const ChatAi = () => {
             <div className=" my-2 w-full" key={ind}>
               <img src={botimg} alt="ai" className="w-5 h-5 m-1" />
               <div className="bg-slate-700 p-2 rounded-md ">
-                <Markdown>{val.response}</Markdown>
+                <AiResponse>{val.response}</AiResponse>
               </div>
             </div>
           )

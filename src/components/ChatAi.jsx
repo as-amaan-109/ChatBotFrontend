@@ -12,9 +12,7 @@ const ChatAi = () => {
   const [prompt, setPrompt] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
   const [chat, setChat] = useState([
-    {
-      response: "Hello How can I help you?",
-    },
+    
   ]);
   const textareaRef = useRef(null);
   const chatContainerRef = useRef(null);
@@ -40,6 +38,7 @@ const ChatAi = () => {
   }
 
   useEffect(() => {
+    generateResponse("Hello")
     const textarea = textareaRef.current;
     if (textarea) {
       const adjustHeight = () => {
@@ -64,6 +63,7 @@ const ChatAi = () => {
         textarea.removeEventListener("input", adjustHeight);
       };
     }
+
   }, []);
 
   useEffect(() => {
@@ -80,7 +80,7 @@ const ChatAi = () => {
   return (
     <div className="relative h-screen w-full ">
       <div
-          className={`absolute z-40 w-full top-0 py-2 px-4 bg-violet-500 ${
+          className={`fixed z-40 w-auto top-[50vh] left-1/2 -translate-x-1/2 md:top-0 rounded-full py-2 px-4 bg-violet-500 ${
             isGenerating ? "block" : "hidden"
           }`}
         >
@@ -102,7 +102,7 @@ const ChatAi = () => {
           ) : (
             <div className=" my-2 w-full" key={ind}>
               <img src={botimg} alt="ai" className="w-5 h-5 m-1" />
-              <div className="bg-slate-500 p-2 rounded-md ">
+              <div className="bg-slate-700 p-2 rounded-md ">
                 <Markdown>{val.response}</Markdown>
               </div>
             </div>

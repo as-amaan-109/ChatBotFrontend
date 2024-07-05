@@ -13,7 +13,7 @@ const ChatAi = () => {
   const [isGenerating, setIsGenerating] = useState(false);
   const [chat, setChat] = useState([
     {
-      response: "Hello Who can I help you?",
+      response: "Hello How can I help you?",
     },
   ]);
   const textareaRef = useRef(null);

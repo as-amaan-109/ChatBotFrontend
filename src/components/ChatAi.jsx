@@ -38,7 +38,7 @@ const ChatAi = () => {
   }
 
   useEffect(() => {
-    generateResponse("Hello")
+    generateResponse("Hello");
     const textarea = textareaRef.current;
     if (textarea) {
       const adjustHeight = () => {

@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import Logo from "../images/logo.png"
+import { useAuth0 } from '@auth0/auth0-react'
 import {
   Dialog,
   DialogPanel,
@@ -39,6 +41,8 @@ function classNames(...classes) {
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const {  user, isAuthenticated,loginWithRedirect,logout }  = useAuth0();
+  console.log(isAuthenticated);
 
   return (
     <header className="">
@@ -46,7 +50,7 @@ export default function Header() {
         <div className="flex lg:flex-1">
           <a href="#" className="-m-1.5 p-1.5">
             <span className="sr-only">Your Company</span>
-            <img className="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600" alt="" />
+            <img className="h-8 w-auto" src={Logo} alt="" />
           </a>
         </div>
         <div className="flex lg:hidden">
@@ -115,9 +119,18 @@ export default function Header() {
           </a>
         </PopoverGroup>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          <a href="#" className="text-sm font-semibold leading-6 text-gray-300">
-            Log in <span aria-hidden="true">&rarr;</span>
-          </a>
+        {isAuthenticated?<button
+                
+                className="-mx-3 block py-2 text-base  leading-7 bg-violet-500 rounded-full px-5 text-white hover:bg-violet-700"
+                onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>
+                Log out
+              </button>:  <button
+                  
+                  className="-mx-3 block  py-2 text-base  leading-7 text-black px-5 bg-white rounded-full hover:bg-slate-300"
+                  onClick={() => loginWithRedirect()} >
+                  Log in
+                </button>
+              }
         </div>
       </nav>
       <Dialog className="lg:hidden" open={mobileMenuOpen} onClose={setMobileMenuOpen}>
@@ -128,7 +141,7 @@ export default function Header() {
               <span className="sr-only">Your Company</span>
               <img
                 className="h-8 w-auto"
-                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+                src={Logo}
                 alt=""
               />
             </a>
@@ -189,12 +202,25 @@ export default function Header() {
                 </a>
               </div>
               <div className="py-6">
-                <a
-                  href="#"
-                  className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-300 hover:bg-gray-700"
-                >
+               {isAuthenticated?(
+               <>
+                <div className='py-4 px-2'>
+                {user.name}
+                </div>
+                <button
+                
+                  className="-mx-3 block py-2 text-base  leading-7 bg-violet-500 rounded-full px-5 text-white hover:bg-violet-700"
+                  onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>
+                  Log out
+                </button>
+               </>
+                ): <button
+                  
+                  className="-mx-3 block  py-2 text-base  leading-7 text-black px-5 bg-white rounded-full hover:bg-slate-300"
+                  onClick={() => loginWithRedirect()} >
                   Log in
-                </a>
+                </button>
+                }
               </div>
             </div>
           </div>

@@ -8,7 +8,7 @@ const LandingPage = () => {
 
       <div className="text-center">
         <h1 className="text-4xl font-bold tracking-tight sm:text-6xl text-white">
-          Revolutionize Learning with AI
+          Revolutionize Learning with  Search.AI
         </h1>
         <p className="mt-6 text-lg leading-8 px-2 md:px-1">
           Harnessing AI to tailor learning experiences, create engaging content,

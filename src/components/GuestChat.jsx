@@ -10,7 +10,7 @@ import AiResponse from "./AiResponse";
 import Logo from "../images/logo.png";
 import { Link } from "react-router-dom";
 
-const GuestChat = () => {
+const GuestChat = (props) => {
   const [prompt, setPrompt] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
   const [chat, setChat] = useState([]);
@@ -83,14 +83,14 @@ const GuestChat = () => {
           <img src={Logo} alt="" className="w-24" />
         </Link>
         <div className="mr-2">
-          <button className="px-6 py-2 bg-white text-violet-700 rounded-full">Login</button>
+          <button className="px-6 py-2 bg-white text-violet-700 rounded-full" onClick={()=>props.loginWithRedirect()}>Login</button>
         </div>
       </div>
       <div className="relative  w-full h-[90vh]">
         
         <div
           ref={chatContainerRef}
-          className="relative my-1 w-full md:w-10/12 mx-auto p-4 scrollbar chatbox rounded-lg min-h-5/6 max-h-[40rem] md:max-h-[30rem] h-auto bg-gray-800 overflow-hidden overflow-y-scroll pb-20"
+          className="relative my-1 w-full md:w-8/12 mx-auto p-4 scrollbar chatbox rounded-lg min-h-5/6  pb-20"
           id="style-1"
         >
           {chat.map((val, ind) =>
@@ -111,7 +111,7 @@ const GuestChat = () => {
             )
           )}
         </div>
-        <div className="prompt-area fixed bottom-1 left-1/2 -translate-x-1/2 w-full md:w-8/12 flex items-end max-h-[500px] rounded-lg py-2 px-4 bg-gray-900 ">
+        <div className="prompt-area fixed bottom-0 left-1/2 -translate-x-1/2 w-full md:w-8/12 flex items-end max-h-[500px] rounded-lg py-2 px-4 bg-gray-900 ">
         <div
           className={`fixed z-40 w-11/12 md:w-full -top-10 md:-top-10 left-1/2 -translate-x-1/2 rounded-full py-2 px-4 bg-violet-500 ${
             isGenerating ? "block" : "hidden"

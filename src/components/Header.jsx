@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import Logo from "../images/logo.png"
-import { useAuth0 } from '@auth0/auth0-react'
+
 import {
   Dialog,
   DialogPanel,
@@ -39,10 +39,10 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function Header() {
+export default function Header(props) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const {  user, isAuthenticated,loginWithRedirect,logout }  = useAuth0();
-  console.log(isAuthenticated);
+
+  console.log(props.isAuthenticated);
 
   return (
     <header className="">
@@ -119,15 +119,15 @@ export default function Header() {
           </a>
         </PopoverGroup>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-        {isAuthenticated?<button
+        {props.isAuthenticated?<button
                 
                 className="-mx-3 block py-2 text-base  leading-7 bg-violet-500 rounded-full px-5 text-white hover:bg-violet-700"
-                onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>
+                onClick={() => props.logout({ logoutParams: { returnTo: window.location.origin } })}>
                 Log out
               </button>:  <button
                   
                   className="-mx-3 block  py-2 text-base  leading-7 text-black px-5 bg-white rounded-full hover:bg-slate-300"
-                  onClick={() => loginWithRedirect()} >
+                  onClick={() => props.loginWithRedirect()} >
                   Log in
                 </button>
               }
@@ -202,22 +202,22 @@ export default function Header() {
                 </a>
               </div>
               <div className="py-6">
-               {isAuthenticated?(
+               {props.isAuthenticated?(
                <>
                 <div className='py-4 px-2'>
-                {user.name}
+                {props.user.name}
                 </div>
                 <button
                 
                   className="-mx-3 block py-2 text-base  leading-7 bg-violet-500 rounded-full px-5 text-white hover:bg-violet-700"
-                  onClick={() => logout({ logoutParams: { returnTo: window.location.origin } })}>
+                  onClick={() => props.logout({ logoutParams: { returnTo: window.location.origin } })}>
                   Log out
                 </button>
                </>
                 ): <button
                   
                   className="-mx-3 block  py-2 text-base  leading-7 text-black px-5 bg-white rounded-full hover:bg-slate-300"
-                  onClick={() => loginWithRedirect()} >
+                  onClick={() => props.loginWithRedirect()} >
                   Log in
                 </button>
                 }

@@ -1,12 +1,14 @@
 import { useState } from "react";
 import GuestChat from "./GuestChat";
 import LoggedChat from "./LoggedChat";
-
-const ChatAi = () => {
-  const [isLoggedin,setIsLoggedin] = useState(false)
+import { useAuth0 } from "@auth0/auth0-react";
+const ChatAi = (props) => {
+  const {isAuthenticated,user,loginWithRedirect,logout} = useAuth0();
+  const [isLoggedin,setIsLoggedin] = useState(isAuthenticated)
+  console.log("Chat ai ", isAuthenticated,user);
   return(
     <>
-    {isLoggedin?<LoggedChat/>:<GuestChat/>}
+    {isLoggedin?<LoggedChat logout={logout} user={user}/>:<GuestChat loginWithRedirect={loginWithRedirect}/>}
     </>
   );
 };

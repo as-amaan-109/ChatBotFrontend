@@ -13,8 +13,10 @@ import Logo from "../images/logo.png";
 import { Link } from "react-router-dom";
 import LoggedChatAside from "./LoggedChatAside";
 import AiResponse from "./AiResponse";
+import { useNavigate } from "react-router-dom";
 
-const LoggedChat = () => {
+const LoggedChat = (props) => {
+  const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [prompt, setPrompt] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
@@ -43,7 +45,7 @@ const LoggedChat = () => {
   }
 
   useEffect(() => {
-    //   generateResponse("Hello");
+    generateResponse(`Hello i am ${props.user.name}`);
     const textarea = textareaRef.current;
     if (textarea) {
       const adjustHeight = () => {
@@ -98,7 +100,7 @@ const LoggedChat = () => {
           <img src={Logo} alt="" className="w-24" />
         </Link>
         <div className="mr-2">
-          <button className="px-6 py-2 bg-white text-violet-700 rounded-full">
+          <button className="px-6 py-2 bg-white text-violet-700 rounded-full" onClick={()=>{props.logout({ logoutParams: { returnTo: window.location.origin } })}}>
             Logout
           </button>
         </div>
@@ -181,15 +183,44 @@ const LoggedChat = () => {
             </button>
           </div>
         </div> */}
-      <div className=" border min-h-[90vh] md:h-[90vh] md:flex justify-center items-stretch">
-        <div className="border bg-black h-full w-3/12 py-5 hidden md:block">
-        <LoggedChatAside/>
+      <div className="min-h-[90vh] md:h-[90vh] md:flex justify-end ">
+        <div className=" bg-black h-full w-3/12 py-5 hidden md:block fixed left-0 z-10">
+          <LoggedChatAside />
         </div>
-        <div className="border h-[90vh] md:w-9/12 relative">
+        <div className=" h-[90vh] md:w-9/12 relative overflow-y-scroll ">
+          <div className=" z-10 w-full md:w-[inherit] fixed bottom-0 flex items-end max-h-[500px] rounded-lg py-2 px-4 bg-gray-900 md:bg-transparent">
+            <div
+              className={`absolute z-40 w-11/12 md:w-full -top-10 md:-top-10 left-1/2 -translate-x-1/2 rounded-full py-2 px-4 bg-violet-500 ${
+                isGenerating ? "block" : "hidden"
+              }`}
+            >
+              <Cog6ToothIcon className="size-6 inline-block animate-spin" />
+              Generating Response
+            </div>
+            <textarea
+              ref={textareaRef}
+              type="text"
+              className="w-10/12 md:w-11/12 text-white rounded-xl border mx-1 p-2 bg-transparent md:bg-gray-900"
+              value={prompt}
+              onChange={(e) => setPrompt(e.target.value)}
+              cols={"auto"}
+            />
+            <button
+              className="bg-violet-500 rounded-full hover:bg-violet-800"
+              onClick={() => {
+                setChat((prevData) => [...prevData, { request: prompt }]);
+                generateResponse(prompt);
+                setPrompt("");
+              }}
+            >
+              <ArrowUpCircleIcon className="size-8 m-2" />
+            </button>
+          </div>
+
           {/* <div className="relative  w-full "> */}
           <div
             ref={chatContainerRef}
-            className="relative my-1 w-full md:w-10/12 mx-auto p-4 scrollbar chatbox rounded-lg min-h-9/12 h-5/6 md:max-h-[30rem]  bg-gray-800 overflow-hidden overflow-y-scroll pb-20"
+            className="relative my-1 w-full md:w-10/12 mx-auto p-4 scrollbar chatbox rounded-lg  pb-20"
             id="style-1"
           >
             {chat.map((val, ind) =>
@@ -210,34 +241,7 @@ const LoggedChat = () => {
               )
             )}
           </div>
-          <div className="prompt-area absolute bottom-1 left-1/2 -translate-x-1/2 w-full md:w-8/12 flex items-end max-h-[500px] rounded-lg py-2 px-4 bg-gray-900 ">
-            <div
-              className={`fixed z-40 w-11/12 md:w-full -top-10 md:-top-10 left-1/2 -translate-x-1/2 rounded-full py-2 px-4 bg-violet-500 ${
-                isGenerating ? "block" : "hidden"
-              }`}
-            >
-              <Cog6ToothIcon className="size-6 inline-block animate-spin" />
-              Generating Response
-            </div>
-            <textarea
-              ref={textareaRef}
-              type="text"
-              className="w-10/12 md:w-11/12 text-white bg-transparent rounded-xl border mx-1 p-2"
-              value={prompt}
-              onChange={(e) => setPrompt(e.target.value)}
-              cols={"auto"}
-            />
-            <button
-              className="bg-violet-500 rounded-full hover:bg-violet-800"
-              onClick={() => {
-                setChat((prevData) => [...prevData, { request: prompt }]);
-                generateResponse(prompt);
-                setPrompt("");
-              }}
-            >
-              <ArrowUpCircleIcon className="size-8 m-2" />
-            </button>
-          </div>
+
           {/* </div> */}
         </div>
       </div>

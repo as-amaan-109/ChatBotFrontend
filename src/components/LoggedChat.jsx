@@ -6,8 +6,8 @@ import {
 } from "@heroicons/react/24/outline";
 import { Dialog, DialogPanel } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import "./chatai.css";
-import botimg from "../images/chatai.png";
+import "./searchai.css";
+import botimg from "../images/searchai.png";
 import AiResponse from "./AiResponse";
 import Logo from "../images/logo.png";
 import { Link } from "react-router-dom";
@@ -34,9 +34,15 @@ const LoggedChat = (props) => {
         },
         body: JSON.stringify({ prompt: text }),
       });
-      const data = await response.json();
-      console.log(data);
-      setChat((prevData) => [...prevData, data]);
+      if(response.status === 500){
+        console.log("Internal server error")
+        setChat((prevData) => [...prevData,{response:"Failed To Generate Response"}]);
+      }else{
+        const data = await response.json();
+        console.log("data ",data);
+        setChat((prevData) => [...prevData, data]);
+      }
+      
       setIsGenerating(false);
     } catch (err) {
       alert(err);
@@ -45,7 +51,7 @@ const LoggedChat = (props) => {
   }
 
   useEffect(() => {
-    generateResponse(`Hello i am ${props.user.name}`);
+    generateResponse(`Hi my name is ${props.user.name}`);
     const textarea = textareaRef.current;
     if (textarea) {
       const adjustHeight = () => {

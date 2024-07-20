@@ -4,8 +4,8 @@ import {
   UserCircleIcon,
   Cog6ToothIcon,
 } from "@heroicons/react/24/outline";
-import "./chatai.css";
-import botimg from "../images/chatai.png";
+import "./searchai.css";
+import botimg from "../images/searchai.png";
 import AiResponse from "./AiResponse";
 import Logo from "../images/logo.png";
 import { Link } from "react-router-dom";

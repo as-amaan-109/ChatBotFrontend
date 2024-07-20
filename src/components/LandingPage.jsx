@@ -16,7 +16,7 @@ const LandingPage = () => {
         </p>
         <div className="mt-10 flex items-center justify-center gap-x-6">
           <Link
-            to="/chatai"
+            to="/searchai"
             className="rounded-3xl bg-white text-violet-700 px-3.5 py-2.5 text-sm font-semibold  shadow-sm  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >
             Get started

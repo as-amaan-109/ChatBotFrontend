@@ -2,7 +2,7 @@ import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import { createBrowserRouter, Router, RouterProvider } from "react-router-dom";
-import ChatAi from "./components/ChatAi";
+import SearchAi from "./components/SearchAi";
 import ErrorPage from "./components/ErrorPage";
 import { Auth0Provider } from "@auth0/auth0-react";
 const router = createBrowserRouter([
@@ -11,8 +11,8 @@ const router = createBrowserRouter([
     element: <App />,
   },
   {
-    path: "/chatai",
-    element: <ChatAi />,
+    path: "/searchai",
+    element: <SearchAi />,
   },
   {
     path: "/*",
